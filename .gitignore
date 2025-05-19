@@ -74,3 +74,8 @@ Desktop.ini
 .buildlog/
 .history
 .svn/
+
+# Large files
+# Exclude the entire Oracle JDK directory
+flutter_application_1/lib/screens/Oracle_JDK-24/
+flutter_application_1/lib/screens/Oracle_JDK-24/lib/modules
