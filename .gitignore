@@ -76,6 +76,12 @@ Desktop.ini
 .svn/
 
 # Large files
-# Exclude the entire Oracle JDK directory
-flutter_application_1/lib/screens/Oracle_JDK-24/
-flutter_application_1/lib/screens/Oracle_JDK-24/lib/modules
+# Exclude the entire Oracle JDK directory and backup
+flutter_application_1/lib/screens/Oracle_JDK-24/**
+JDK_Backup/**
+**/modules
+*.jmod
+*.dll
+*.jar
+*.lib
+*.jsa
