@@ -1,0 +1,3 @@
+TransactionID,OrderID,TransactionDate,Amount,TransactionStatus,ReceiptNumber,Notes
+1,1,"2023-05-10 12:45:00",319.00,"Completed","20230510-124500-JD","Full payment"
+2,2,"2023-05-10 14:00:00",215.00,"Completed","20230510-140000-JS","Full payment"

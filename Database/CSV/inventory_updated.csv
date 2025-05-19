@@ -1,0 +1,77 @@
+InventoryID,ItemName,CategoryID,Unit,Status,Notes
+1,"Chicken",1,"kilo","Available",NULL
+2,"Sugar",1,"kilo","Available",NULL
+3,"Black Pepper",1,"kilo","Available",NULL
+4,"Garlic",1,"kilo","Available",NULL
+5,"Kalamansi",1,"kilo","Available",NULL
+6,"Egg",1,"tray","Available",NULL
+7,"Salt",1,"kilo","Available",NULL
+8,"Sesame Oil",1,"bottle","Available",NULL
+9,"Nam2/Magic Sarap",1,"pack","Available",NULL
+10,"Cassava Flour",1,"kilo","Available",NULL
+11,"Ground Beef",1,"kilo","Available",NULL
+12,"Onion",1,"kilo","Available",NULL
+13,"All Purpose Flour",1,"kilo","Available",NULL
+14,"Bread Crumbs",1,"pack","Available",NULL
+15,"Oyster",1,"gallon","Available",NULL
+16,"Cups",3,"pcs","Available",NULL
+17,"Straws",3,"pcs","Available",NULL
+18,"Plastics Single",3,"pcs","Available",NULL
+19,"Plastics Double",3,"pcs","Available",NULL
+20,"Tiny Plastic",3,"pcs","Available",NULL
+21,"Medium Plastic",3,"pcs","Available",NULL
+22,"Caramel",2,"bottle","Available",NULL
+23,"Chocolate",2,"bottle","Available",NULL
+24,"Ube",2,"bottle","Available",NULL
+25,"Matcha Powder",2,"kilo","Available",NULL
+26,"French Vanilla",2,"bottle","Available",NULL
+27,"Salted Caramel",2,"bottle","Available",NULL
+28,"Milk",2,"liter","Available",NULL
+29,"Coffee Beans",2,"kilo","Available",NULL
+30,"Condensed Milk",2,"can","Available",NULL
+31,"Strawberry Syrup",2,"bottle","Available",NULL
+32,"Mixed Berries Syrup",2,"bottle","Available",NULL
+33,"Lemon Syrup",2,"bottle","Available",NULL
+34,"Lychee Syrup",2,"bottle","Available",NULL
+35,"Green Apple Syrup",2,"bottle","Available",NULL
+36,"Wintermelon Syrup",2,"bottle","Available",NULL
+37,"Oreos",2,"pack","Available",NULL
+38,"Cinnamon Powder",1,"kilo","Available",NULL
+39,"Mango Jam",1,"bottle","Available",NULL
+40,"Strawberry Jam",1,"bottle","Available",NULL
+41,"Blueberry Jam",1,"bottle","Available",NULL
+42,"Parmesan",1,"kilo","Available",NULL
+43,"Honey Glazed",1,"bottle","Available",NULL
+44,"Margarine",1,"kilo","Available",NULL
+45,"Buffalo Sauce",1,"bottle","Available",NULL
+46,"Soy Sauce",1,"bottle","Available",NULL
+47,"Teriyaki Sauce",1,"bottle","Available",NULL
+48,"Sweet Chili Sauce",1,"bottle","Available",NULL
+49,"BBQ Sauce",1,"bottle","Available",NULL
+50,"Rice",1,"kilo","Available",NULL
+51,"Corned Beef",1,"can","Available",NULL
+52,"Ham",1,"kilo","Available",NULL
+53,"Hotdog",1,"kilo","Available",NULL
+54,"Chorizo",1,"kilo","Available",NULL
+55,"Tocino",1,"kilo","Available",NULL
+56,"Spam",1,"can","Available",NULL
+57,"Bacon",1,"kilo","Available",NULL
+58,"Bread",1,"loaf","Available",NULL
+59,"Cheese",1,"kilo","Available",NULL
+60,"Lettuce",1,"kilo","Available",NULL
+61,"Tomato",1,"kilo","Available",NULL
+62,"Tortilla Chips",1,"kilo","Available",NULL
+63,"Potatoes",1,"kilo","Available",NULL
+64,"Ground Meat",1,"kilo","Available",NULL
+65,"Waffle Mix",1,"kilo","Available",NULL
+66,"Pineapple",1,"kilo","Available",NULL
+67,"Pasta",1,"kilo","Available",NULL
+68,"Cream",2,"liter","Available",NULL
+69,"Nutella",1,"bottle","Available",NULL
+70,"Marshmallows",1,"pack","Available",NULL
+71,"Chocolate Chips",1,"kilo","Available",NULL
+72,"Soda",2,"liter","Available",NULL
+73,"Passionfruit Syrup",2,"bottle","Available",NULL
+74,"Cherry Syrup",2,"bottle","Available",NULL
+75,"Ice Cream",2,"liter","Available",NULL
+76,"Hazelnut Syrup",2,"bottle","Available",NULL

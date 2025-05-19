@@ -1,0 +1,50 @@
+InventoryID,ItemName,CategoryID,Notes
+1,"Chicken",1,NULL
+2,"Sugar",1,NULL
+3,"Black Pepper",1,NULL
+4,"Garlic",1,NULL
+5,"Kalamansi",1,NULL
+6,"Egg",1,NULL
+7,"Salt",1,NULL
+8,"Sesame Oil",1,NULL
+9,"Nam2/Magic Sarap",1,NULL
+10,"Cassava Flour",1,NULL
+11,"Ground Beef",1,NULL
+12,"Onion",1,NULL
+13,"All Purpose Flour",1,NULL
+14,"Bread Crumbs",1,NULL
+15,"Oyster",1,NULL
+16,"Cups",3,NULL
+17,"Straws",3,NULL
+18,"Plastics Single",3,NULL
+19,"Plastics Double",3,NULL
+20,"Tiny Container",3,NULL
+21,"Medium Container",3,NULL
+22,"Caramel",2,NULL
+23,"Chocolate",2,NULL
+24,"Ube",2,NULL
+25,"Matcha Powder",2,NULL
+26,"French Vanilla",2,NULL
+27,"Salted Caramel",2,NULL
+28,"Milk",2,NULL
+29,"Coffee Beans",2,NULL
+30,"Condensed Milk",2,NULL
+31,"Strawberry Syrup",2,NULL
+32,"Mixed Berries Syrup",2,NULL
+33,"Lemon Syrup",2,NULL
+34,"Lychee Syrup",2,NULL
+35,"Green Apple Syrup",2,NULL
+36,"Wintermelon Syrup",2,NULL
+37,"Oreos",2,NULL
+38,"Cinnamon Powder",2,NULL
+39,"Mango Jam",8,NULL
+40,"Strawberry Jam",8,NULL
+41,"Blueberry Jam",8,NULL
+42,"Parmesan",8,NULL
+43,"Honey Glazed",8,NULL
+44,"Margarine",8,NULL
+45,"Buffalo Sauce",8,NULL
+46,"Soy Sauce",8,NULL
+47,"Teriyaki Sauce",8,NULL
+48,"Sweet Chili Sauce",8,NULL
+49,"BBQ Sauce",8,NULL
