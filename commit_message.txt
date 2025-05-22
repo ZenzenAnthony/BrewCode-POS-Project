@@ -1,0 +1,11 @@
+Project reorganization and documentation centralization
+
+- Moved all documentation files to the Documentations folder with structured organization
+- Removed redundant and outdated files
+- Fixed menu-item ingredients for Cornsilog
+- Added complete menu-inventory relationships for all drinks
+- Updated references in the main README
+- Created comprehensive documentation index
+- Added Project Update Summary with all changes
+
+This commit completes the May 22, 2025 enhancement of the BrewCode POS Project.

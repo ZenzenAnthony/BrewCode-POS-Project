@@ -23,8 +23,7 @@ This document outlines the plan for integrating the Flutter application with the
 1. **Add Required Dependencies**
    ```yaml
    dependencies:
-     sqljocky5: ^3.0.0  # MySQL/MariaDB client
-     # OR for SQL Server
+     # For SQL Server
      mssql: ^1.0.0
    ```
 
@@ -90,12 +89,78 @@ class InventoryService {
   
   Future<bool> updateInventoryStatus(String inventoryId, String newStatus) async {
     final conn = await _dbConnection.connection;
-    final result = await conn.execute(
-      'UPDATE Inventory SET Status = @newStatus WHERE InventoryID = @inventoryId',
-      {'newStatus': newStatus, 'inventoryId': inventoryId}
+    
+    try {
+      // Start a transaction
+      await conn.startTransaction();
+      
+      // Update inventory status
+      final result = await conn.execute(
+        'UPDATE Inventory SET Status = @newStatus WHERE InventoryID = @inventoryId',
+        {'newStatus': newStatus, 'inventoryId': inventoryId}
+      );
+      
+      // If status was updated, also update menu availability
+      if (result.affectedRows > 0) {
+        await conn.execute('EXEC sp_UpdateMenuAvailabilityByIngredients');
+      }
+      
+      // Commit the transaction
+      await conn.commit();
+      
+      return result.affectedRows > 0;
+    } catch (e) {
+      // Rollback on error
+      await conn.rollback();
+      print('Error updating inventory status: $e');
+      return false;
+    }
+  }
+}
+```
+
+#### Menu Ingredient Service
+```dart
+// lib/services/menu_ingredient_service.dart
+class MenuIngredientService {
+  final _dbConnection = DatabaseConnection();
+  
+  Future<List<MenuItemIngredient>> getIngredientsForMenuItem(String menuItemId) async {
+    final conn = await _dbConnection.connection;
+    final results = await conn.query(
+      'SELECT * FROM MenuItemIngredients WHERE MenuItemID = @menuItemId',
+      {'menuItemId': menuItemId}
     );
     
-    return result.affectedRows > 0;
+    return results.map((row) => MenuItemIngredient.fromJson(row)).toList();
+  }
+
+  Future<List<String>> getMenuItemsUsingIngredient(String inventoryId) async {
+    final conn = await _dbConnection.connection;
+    final results = await conn.query(
+      'SELECT m.ItemName FROM MenuItems m ' +
+      'JOIN MenuItemIngredients mi ON m.ItemID = mi.MenuItemID ' +
+      'WHERE mi.InventoryID = @inventoryId',
+      {'inventoryId': inventoryId}
+    );
+    
+    return results.map((row) => row['ItemName'] as String).toList();
+  }
+
+  Future<bool> linkMenuItemToIngredient(String menuItemId, String inventoryId) async {
+    final conn = await _dbConnection.connection;
+    
+    try {
+      await conn.execute(
+        'EXEC sp_LinkMenuItemToIngredient @MenuItemID, @InventoryID',
+        {'MenuItemID': menuItemId, 'InventoryID': inventoryId}
+      );
+      
+      return true;
+    } catch (e) {
+      print('Error linking menu item to ingredient: $e');
+      return false;
+    }
   }
 }
 ```

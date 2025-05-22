@@ -7,12 +7,9 @@ A Point of Sale (POS) system for coffee shops and cafés, developed using Flutte
 This repository contains:
 
 - **`flutter_application_1/`**: The Flutter application for the POS system
-- **`Database/`**: SQL schema and stored procedures for the database
+- **`Database/`**: SQL schema, stored procedures, and database documentation
 - **`CSV/`**: CSV data files for import into the database
-- **`Documentations/`**: All project documentation (consolidated in this folder)
-
-> **Note**: All documentation files have been permanently relocated to the Documentations folder. 
-> Please see [Documentations/README.md](Documentations/README.md) for a complete index of all documentation.
+- **`Documentations/`**: Project documentation and design documents
 
 ## Flutter Application
 
@@ -57,8 +54,8 @@ flutter run
 
 The application is designed to connect to a SQL Server or MySQL database. The following resources provide details on database structure and integration:
 
-- **Database Structure**: See `Documentations/Database/FINAL_IMPLEMENTATION_SUMMARY.md` for the complete database structure
-- **Menu-Inventory Relationship**: See `Documentations/Database/COMPLETE_MENU_INVENTORY_RELATIONSHIPS.md` for details on how menu items are linked to inventory items
+- **Database Structure**: See `Database/FINAL_IMPLEMENTATION_SUMMARY.md` for the complete database structure
+- **Menu-Inventory Relationship**: See `Database/COMPLETE_MENU_INVENTORY_RELATIONSHIPS.md` for details on how menu items are linked to inventory items
 - **CSV Data Files**: The `CSV` folder contains all data ready for import into the database
 - **Import Scripts**: 
   - SQL Server: `CSV/import_csv_to_sql_with_menu_inventory.sql`
@@ -70,12 +67,11 @@ The application is designed to connect to a SQL Server or MySQL database. The fo
 - Fixed ingredients for the Cornsilog menu item
 - Added relationships for all drink menu items
 - Project files cleaned up and reorganized for better maintainability
-- Documentation consolidated in the Documentations folder
-- See `Documentations/Database/MENU_INVENTORY_ENHANCEMENT_SUMMARY.md` for complete update details
+- See `Database/MENU_INVENTORY_ENHANCEMENT_SUMMARY.md` for complete update details
 
 ## Documentation Guide
 
-For a comprehensive guide to project documentation, see `Documentations/README.md`
+For a comprehensive guide to project documentation, see `DOCUMENTATION_GUIDE.md` in the root directory.
 
 ## Status & Improvements
 

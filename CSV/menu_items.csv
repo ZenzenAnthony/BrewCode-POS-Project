@@ -1,6 +1,0 @@
-ItemID,ItemName,CategoryID,Description,Price,Recipe,ImagePath,Active
-1,"Fried Chicken",10,"Crispy fried chicken pieces",199.00,NULL,NULL,1
-2,"Beef Steak",11,"Grilled beef steak with sauce",250.00,NULL,NULL,1
-3,"Caramel Macchiato",12,"Sweet caramel coffee with milk",120.00,NULL,NULL,1
-4,"Wintermelon Milk Tea",13,"Refreshing wintermelon flavored milk tea",95.00,NULL,NULL,1
-5,"Chicken Nuggets",14,"Breaded chicken nuggets with sauce",85.00,NULL,NULL,1

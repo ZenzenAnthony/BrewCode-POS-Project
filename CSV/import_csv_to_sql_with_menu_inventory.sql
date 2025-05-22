@@ -1,5 +1,6 @@
 -- Import CSV files into SQL Server
--- Updated script to remove MenuItemIngredients and update Inventory structure
+-- Updated script with menu-inventory relationship enhancement
+-- For BrewCode POS Project - May 22, 2025
 
 -- Create the database if it doesn't exist
 IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = 'KohiDB')
@@ -13,8 +14,10 @@ USE KohiDB;
 GO
 
 -- Drop tables if they exist to avoid errors on recreating the database
+DROP TABLE IF EXISTS MenuItemIngredients; -- Drop the junction table first to avoid foreign key issues
 DROP TABLE IF EXISTS OrderItems;
 DROP TABLE IF EXISTS Orders;
+DROP TABLE IF EXISTS Transactions;
 DROP TABLE IF EXISTS Inventory;
 DROP TABLE IF EXISTS MenuItems;
 DROP TABLE IF EXISTS Categories;
@@ -106,6 +109,92 @@ CREATE TABLE Transactions (
     FOREIGN KEY (OrderID) REFERENCES Orders(OrderID)
 );
 
+-- Create the MenuItemIngredients junction table
+CREATE TABLE MenuItemIngredients (
+    MenuItemIngredientID INT PRIMARY KEY IDENTITY(1,1),
+    MenuItemID INT NOT NULL,
+    InventoryID INT NOT NULL,
+    -- No quantity tracking as requested
+    FOREIGN KEY (MenuItemID) REFERENCES MenuItems(ItemID),
+    FOREIGN KEY (InventoryID) REFERENCES Inventory(InventoryID),
+    -- Ensure a menu item doesn't link to the same inventory item twice
+    CONSTRAINT UC_MenuItem_Inventory UNIQUE (MenuItemID, InventoryID)
+);
+
+-- Create stored procedures for menu-inventory relationship
+
+-- 1. Stored procedure for updating menu availability based on ingredients
+IF EXISTS (SELECT * FROM sys.procedures WHERE name = 'sp_UpdateMenuAvailabilityByIngredients')
+BEGIN
+    DROP PROCEDURE sp_UpdateMenuAvailabilityByIngredients;
+END
+GO
+
+CREATE PROCEDURE sp_UpdateMenuAvailabilityByIngredients
+AS
+BEGIN
+    -- First, set all menu items as active (default state)
+    UPDATE MenuItems SET Active = 1;
+    
+    -- Then, mark menu items as inactive if ANY of their required ingredients
+    -- are not available
+    UPDATE MenuItems
+    SET Active = 0
+    WHERE ItemID IN (
+        -- Find menu items that have at least one unavailable ingredient
+        SELECT DISTINCT mi.MenuItemID
+        FROM MenuItemIngredients mi
+        JOIN Inventory i ON mi.InventoryID = i.InventoryID
+        WHERE i.Status = 'Not Available'
+    );
+    
+    PRINT 'Menu item availability updated based on ingredient status';
+END;
+GO
+
+-- 2. Helper procedure to link menu items to ingredients
+IF EXISTS (SELECT * FROM sys.procedures WHERE name = 'sp_LinkMenuItemToIngredient')
+BEGIN
+    DROP PROCEDURE sp_LinkMenuItemToIngredient;
+END
+GO
+
+CREATE PROCEDURE sp_LinkMenuItemToIngredient
+    @MenuItemID INT,
+    @InventoryID INT
+AS
+BEGIN
+    -- Check if both IDs exist
+    IF NOT EXISTS (SELECT 1 FROM MenuItems WHERE ItemID = @MenuItemID)
+    BEGIN
+        PRINT 'Error: Menu item ID ' + CAST(@MenuItemID AS VARCHAR(10)) + ' does not exist';
+        RETURN;
+    END
+    
+    IF NOT EXISTS (SELECT 1 FROM Inventory WHERE InventoryID = @InventoryID)
+    BEGIN
+        PRINT 'Error: Inventory item ID ' + CAST(@InventoryID AS VARCHAR(10)) + ' does not exist';
+        RETURN;
+    END
+    
+    -- Check if relationship already exists
+    IF EXISTS (SELECT 1 FROM MenuItemIngredients 
+                WHERE MenuItemID = @MenuItemID AND InventoryID = @InventoryID)
+    BEGIN
+        -- Relationship already exists, do nothing
+        PRINT 'Relationship already exists, no changes made';
+    END
+    ELSE
+    BEGIN
+        -- Insert new relationship
+        INSERT INTO MenuItemIngredients (MenuItemID, InventoryID)
+        VALUES (@MenuItemID, @InventoryID);
+        
+        PRINT 'Created new menu item-ingredient relationship';
+    END
+END;
+GO
+
 -- Create stored procedures for common operations
 
 -- Stored procedure for creating a new order
@@ -155,25 +244,44 @@ BEGIN
 END;
 GO
 
--- Create a new stored procedure to check ingredient availability and update menu item availability
-CREATE PROCEDURE sp_UpdateMenuItemAvailability
+-- Stored procedure to complete an order and create transaction
+IF EXISTS (SELECT * FROM sys.procedures WHERE name = 'sp_CompleteOrder')
+BEGIN
+    DROP PROCEDURE sp_CompleteOrder;
+END
+GO
+
+CREATE PROCEDURE sp_CompleteOrder
+    @OrderID INT,
+    @CustomerInitials VARCHAR(10) = 'XX'
 AS
 BEGIN
-    -- This procedure can be used to check inventory status and update menu item availability
-    -- When an ingredient is marked as "Not Available", related menu items should be marked as inactive
+    DECLARE @ReceiptNumber VARCHAR(50);
+    DECLARE @TotalAmount DECIMAL(10,2);
+    DECLARE @DatePart VARCHAR(15);
     
-    -- Mark menu items as inactive based on ingredient status
-    UPDATE MenuItems
-    SET Active = 0
-    WHERE EXISTS (
-        SELECT 1 
-        FROM Inventory 
-        WHERE Status = 'Not Available' 
-        AND CategoryID IN (SELECT CategoryID FROM Categories WHERE ParentCategoryID IS NULL)
-    );
+    -- Get order total
+    SELECT @TotalAmount = TotalAmount 
+    FROM Orders 
+    WHERE OrderID = @OrderID;
     
-    -- Note: This is a simplified example. In a real system, you would need a more 
-    -- sophisticated logic based on your specific requirements and item-ingredient relationships
+    -- Generate receipt number (date + time + customer initials)
+    SET @DatePart = FORMAT(GETDATE(), 'yyyyMMdd-HHmmss');
+    SET @ReceiptNumber = @DatePart + '-' + @CustomerInitials;
+    
+    -- Update order status
+    UPDATE Orders
+    SET OrderStatus = 'Completed'
+    WHERE OrderID = @OrderID;
+    
+    -- Create transaction record
+    INSERT INTO Transactions (OrderID, Amount, TransactionStatus, ReceiptNumber)
+    VALUES (@OrderID, @TotalAmount, 'Completed', @ReceiptNumber);
+    
+    -- Return result
+    SELECT 
+        @ReceiptNumber AS ReceiptNumber, 
+        'Order completed successfully with receipt number: ' + @ReceiptNumber AS Result;
 END;
 GO
 
@@ -182,7 +290,7 @@ GO
 
 -- Import Categories
 BULK INSERT Categories
-FROM 'C:\Users\User\OneDrive\Documents\School Stuffs\BrewCode POS Project\Database\CSV\categories_updated.csv'
+FROM 'C:\Projects\BrewCode-POS-Project\CSV\categories_updated.csv'
 WITH (
     FIELDTERMINATOR = ',',
     ROWTERMINATOR = '\n',
@@ -190,9 +298,9 @@ WITH (
     TABLOCK
 );
 
--- Import Staff
+-- Import Staff (contains only one record as requested)
 BULK INSERT Staff
-FROM 'C:\Users\User\OneDrive\Documents\School Stuffs\BrewCode POS Project\Database\CSV\staff.csv'
+FROM 'C:\Projects\BrewCode-POS-Project\CSV\staff.csv'
 WITH (
     FIELDTERMINATOR = ',',
     ROWTERMINATOR = '\n',
@@ -200,29 +308,9 @@ WITH (
     TABLOCK
 );
 
--- Import Customers
-BULK INSERT Customers
-FROM 'C:\Users\User\OneDrive\Documents\School Stuffs\BrewCode POS Project\Database\CSV\customers.csv'
-WITH (
-    FIELDTERMINATOR = ',',
-    ROWTERMINATOR = '\n',
-    FIRSTROW = 2,
-    TABLOCK
-);
-
--- Import Inventory (updated with new structure)
-BULK INSERT Inventory
-FROM 'C:\Users\User\OneDrive\Documents\School Stuffs\BrewCode POS Project\Database\CSV\inventory_updated.csv'
-WITH (
-    FIELDTERMINATOR = ',',
-    ROWTERMINATOR = '\n',
-    FIRSTROW = 2,
-    TABLOCK
-);
-
--- Import MenuItems
+-- Import Menu Items
 BULK INSERT MenuItems
-FROM 'C:\Users\User\OneDrive\Documents\School Stuffs\BrewCode POS Project\Database\CSV\menu_items_updated.csv'
+FROM 'C:\Projects\BrewCode-POS-Project\CSV\menu_items_updated.csv'
 WITH (
     FIELDTERMINATOR = ',',
     ROWTERMINATOR = '\n',
@@ -230,9 +318,29 @@ WITH (
     TABLOCK
 );
 
--- Import Orders
+-- Import Inventory
+BULK INSERT Inventory
+FROM 'C:\Projects\BrewCode-POS-Project\CSV\inventory_updated.csv'
+WITH (
+    FIELDTERMINATOR = ',',
+    ROWTERMINATOR = '\n',
+    FIRSTROW = 2,
+    TABLOCK
+);
+
+-- Import Customers (empty file with headers only as requested)
+BULK INSERT Customers
+FROM 'C:\Projects\BrewCode-POS-Project\CSV\customers.csv'
+WITH (
+    FIELDTERMINATOR = ',',
+    ROWTERMINATOR = '\n',
+    FIRSTROW = 2,
+    TABLOCK
+);
+
+-- Import Orders (empty file with headers only as requested)
 BULK INSERT Orders
-FROM 'C:\Users\User\OneDrive\Documents\School Stuffs\BrewCode POS Project\Database\CSV\orders.csv'
+FROM 'C:\Projects\BrewCode-POS-Project\CSV\orders.csv'
 WITH (
     FIELDTERMINATOR = ',',
     ROWTERMINATOR = '\n',
@@ -240,9 +348,9 @@ WITH (
     TABLOCK
 );
 
--- Import OrderItems
+-- Import Order Items (empty file with headers only as requested)
 BULK INSERT OrderItems
-FROM 'C:\Users\User\OneDrive\Documents\School Stuffs\BrewCode POS Project\Database\CSV\order_items.csv'
+FROM 'C:\Projects\BrewCode-POS-Project\CSV\order_items.csv'
 WITH (
     FIELDTERMINATOR = ',',
     ROWTERMINATOR = '\n',
@@ -250,9 +358,9 @@ WITH (
     TABLOCK
 );
 
--- Import Transactions
+-- Import Transactions (empty file with headers only as requested)
 BULK INSERT Transactions
-FROM 'C:\Users\User\OneDrive\Documents\School Stuffs\BrewCode POS Project\Database\CSV\transactions.csv'
+FROM 'C:\Projects\BrewCode-POS-Project\CSV\transactions.csv'
 WITH (
     FIELDTERMINATOR = ',',
     ROWTERMINATOR = '\n',
@@ -260,66 +368,15 @@ WITH (
     TABLOCK
 );
 
--- Run the procedure to update menu item availability based on inventory status
-EXEC sp_UpdateMenuItemAvailability;
+-- Import Menu-Item-Ingredient relationships
+BULK INSERT MenuItemIngredients
+FROM 'C:\Projects\BrewCode-POS-Project\CSV\menu_item_ingredients.csv'
+WITH (
+    FIELDTERMINATOR = ',',
+    ROWTERMINATOR = '\n',
+    FIRSTROW = 2,
+    TABLOCK
+);
 
--- Create a stored procedure to mark an order as complete and create a transaction record
-CREATE PROCEDURE sp_CompleteOrder
-    @OrderID INT,
-    @CustomerInitials VARCHAR(10)
-AS
-BEGIN
-    DECLARE @TotalAmount DECIMAL(10,2);
-    DECLARE @ReceiptNumber VARCHAR(50);
-    
-    -- Get the total amount from the order
-    SELECT @TotalAmount = TotalAmount
-    FROM Orders
-    WHERE OrderID = @OrderID;
-    
-    -- Generate receipt number based on date-time and customer initials
-    SET @ReceiptNumber = FORMAT(GETDATE(), 'yyyyMMdd-HHmmss') + '-' + @CustomerInitials;
-    
-    -- Update the order status to completed
-    UPDATE Orders
-    SET OrderStatus = 'Completed'
-    WHERE OrderID = @OrderID AND OrderStatus = 'Pending';
-    
-    -- Create a transaction record only if the order was successfully marked as completed
-    IF @@ROWCOUNT > 0
-    BEGIN
-        INSERT INTO Transactions (OrderID, TransactionDate, Amount, TransactionStatus, ReceiptNumber, Notes)
-        VALUES (@OrderID, GETDATE(), @TotalAmount, 'Completed', @ReceiptNumber, 'Auto-generated from order completion');
-        
-        SELECT 'Order ' + CAST(@OrderID AS VARCHAR) + ' completed successfully. Receipt: ' + @ReceiptNumber AS Result;
-    END
-    ELSE
-    BEGIN
-        SELECT 'Failed to complete order. Order may already be completed or does not exist.' AS Result;
-    END
-END;
+PRINT 'Database setup completed successfully';
 GO
-
--- Create a stored procedure to retrieve completed transactions with order details
-CREATE PROCEDURE sp_GetCompletedTransactions
-AS
-BEGIN
-    SELECT 
-        t.TransactionID, 
-        t.OrderID, 
-        t.TransactionDate,
-        t.Amount,
-        t.ReceiptNumber,
-        o.OrderType,
-        c.FirstName AS CustomerName,
-        s.FirstName + ' ' + s.LastName AS StaffName
-    FROM Transactions t
-    JOIN Orders o ON t.OrderID = o.OrderID
-    LEFT JOIN Customers c ON o.CustomerID = c.CustomerID
-    JOIN Staff s ON o.StaffID = s.StaffID
-    WHERE o.OrderStatus = 'Completed'
-    ORDER BY t.TransactionDate DESC;
-END;
-GO
-
-PRINT 'Database import completed successfully!';

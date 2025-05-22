@@ -1,4 +1,0 @@
-OrderID,CustomerID,StaffID,OrderDate,OrderType,OrderStatus,TotalAmount,Notes
-1,1,3,"2023-05-10 12:30:00","Dine-in","Completed",319.00,NULL
-2,2,3,"2023-05-10 13:45:00","Takeout","Completed",215.00,NULL
-3,3,3,"2023-05-11 16:20:00","Takeout","Pending",535.00,NULL
