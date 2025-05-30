@@ -1,0 +1,93 @@
+ItemID,ItemName,CategoryID,Description,Price,Active
+1,"Teriyaki Chicken",3,"Chicken with teriyaki sauce served with rice",139.00,1
+2,"Sweet Chilli Chicken",3,"Chicken with sweet chilli sauce served with rice",139.00,1
+3,"Barbecue Chicken",3,"Chicken with barbecue sauce served with rice",139.00,1
+4,"Soy Garlic Chicken",3,"Chicken with soy garlic sauce served with rice",139.00,1
+5,"Buttered Chicken",3,"Chicken in butter sauce served with rice",125.00,1
+6,"Parmesan Chicken",3,"Chicken with parmesan served with rice",125.00,1
+7,"Lemon Chicken",3,"Chicken with lemon sauce served with rice",125.00,1
+8,"Buffalo Chicken",3,"Chicken with buffalo sauce served with rice",125.00,1
+9,"Honey Glazed Chicken",3,"Chicken with honey glaze served with rice",125.00,1
+10,"Garlic Beef Mushroom",3,"Beef and mushroom with garlic sauce served with rice",149.00,1
+11,"Burger Steak",3,"Beef patty with gravy served with rice",149.00,NULL,NULL,1
+12,"Cornsilog",4,"Corned beef with sinangag (fried rice) and itlog (egg)",80.00,NULL,NULL,1
+13,"Hamsilog",4,"Ham with sinangag (fried rice) and itlog (egg)",80.00,NULL,NULL,1
+14,"Hotsilog",4,"Hotdog with sinangag (fried rice) and itlog (egg)",80.00,NULL,NULL,1
+15,"Chosilog",4,"Chorizo with sinangag (fried rice) and itlog (egg)",80.00,NULL,NULL,1
+16,"Tocilog",4,"Tocino with sinangag (fried rice) and itlog (egg)",80.00,NULL,NULL,1
+17,"Spamsilog",4,"Spam with sinangag (fried rice) and itlog (egg)",110.00,NULL,NULL,1
+18,"Bacsilog",4,"Bacon with sinangag (fried rice) and itlog (egg)",110.00,NULL,NULL,1
+19,"Club Sandwich",5,"Triple-decker sandwich with chicken, bacon, lettuce, tomato",145.00,NULL,NULL,1
+20,"Cheeseburger",5,"Beef patty with cheese in a bun",130.00,NULL,NULL,1
+21,"Nacho Overload",5,"Tortilla chips loaded with toppings",150.00,NULL,NULL,1
+22,"Fries",5,"Crispy potato fries",60.00,NULL,NULL,1
+23,"Meaty Fries",5,"Potato fries topped with meat",110.00,NULL,NULL,1
+24,"Meat Loaded Waffle Pizza",6,"Waffle base pizza loaded with meat toppings",199.00,NULL,NULL,1
+25,"Ham + Cheese Waffle Pizza",6,"Waffle base pizza with ham and cheese",159.00,NULL,NULL,1
+26,"Hawaiian Waffle Pizza",6,"Waffle base pizza with ham and pineapple",169.00,NULL,NULL,1
+27,"Carbonara Solo",7,"Creamy pasta with bacon bits - solo serving",99.00,NULL,NULL,1
+28,"Carbonara Sharing",7,"Creamy pasta with bacon bits - sharing size",230.00,NULL,NULL,1
+29,"Strawberry Waffle",8,"Waffle topped with strawberry",75.00,NULL,NULL,1
+30,"Blueberry Waffle",8,"Waffle topped with blueberry",75.00,NULL,NULL,1
+31,"Mango Waffle",8,"Waffle topped with mango",80.00,NULL,NULL,1
+32,"Drizzled Chocochips Waffle",8,"Waffle with chocolate drizzle and chocochips",75.00,NULL,NULL,1
+33,"Chocomallows Waffle",8,"Waffle with chocolate and marshmallows",80.00,NULL,NULL,1
+34,"Nutella Waffle",8,"Waffle topped with Nutella spread",90.00,NULL,NULL,1
+35,"Oreo Nutella Waffle",8,"Waffle topped with Nutella and Oreo crumbs",100.00,NULL,NULL,1
+36,"Egg + Cheese Sandwich",9,"Sandwich with egg and cheese",145.00,NULL,NULL,1
+37,"Ham + Cheese Sandwich",9,"Sandwich with ham and cheese",145.00,NULL,NULL,1
+38,"Ham + Egg Sandwich",9,"Sandwich with ham and egg",150.00,NULL,NULL,1
+39,"Hot Kōhi",10,"Hot brewed signature coffee",90.00,NULL,NULL,1
+40,"Cold Kōhi",10,"Cold brewed signature coffee",110.00,NULL,NULL,1
+41,"Hot Americano",10,"Hot espresso diluted with water",55.00,NULL,NULL,1
+42,"Cold Americano",10,"Cold espresso diluted with water",80.00,NULL,NULL,1
+43,"Hot Kōhi Latte",10,"Hot coffee with steamed milk",75.00,NULL,NULL,1
+44,"Cold Kōhi Latte",10,"Cold coffee with milk",90.00,NULL,NULL,1
+45,"Hot Cappuccino",10,"Hot coffee with steamed milk and foam",80.00,NULL,NULL,1
+46,"Cold Cappuccino",10,"Cold coffee with milk and foam",95.00,NULL,NULL,1
+47,"Hot Mocha",10,"Hot coffee with chocolate and milk",80.00,NULL,NULL,1
+48,"Cold Mocha",10,"Cold coffee with chocolate and milk",95.00,NULL,NULL,1
+49,"Hot Caramel Macchiato",10,"Hot coffee with caramel and milk",80.00,NULL,NULL,1
+50,"Cold Caramel Macchiato",10,"Cold coffee with caramel and milk",95.00,NULL,NULL,1
+51,"Hot Salted Caramel",10,"Hot coffee with salted caramel",90.00,NULL,NULL,1
+52,"Cold Salted Caramel",10,"Cold coffee with salted caramel",120.00,NULL,NULL,1
+53,"Hot Dirty Matcha",10,"Hot matcha with a shot of espresso",100.00,NULL,NULL,1
+54,"Cold Dirty Matcha",10,"Cold matcha with a shot of espresso",125.00,NULL,NULL,1
+55,"Hot Spanish Latte",10,"Hot coffee with condensed milk",110.00,NULL,NULL,1
+56,"Cold Spanish Latte",10,"Cold coffee with condensed milk",125.00,NULL,NULL,1
+57,"Cold Oreo Kōhi",10,"Cold coffee with Oreo crumbs",135.00,NULL,NULL,1
+58,"Hot French Vanilla",10,"Hot coffee with French vanilla flavor",110.00,NULL,NULL,1
+59,"Cold French Vanilla",10,"Cold coffee with French vanilla flavor",125.00,NULL,NULL,1
+60,"Cold Hazelnut",10,"Cold coffee with hazelnut flavor",135.00,NULL,NULL,1
+61,"Chocolate Float",11,"Chocolate beverage with ice cream",110.00,NULL,NULL,1
+62,"Ube Float",11,"Ube beverage with ice cream",115.00,NULL,NULL,1
+63,"Matcha Float",11,"Matcha beverage with ice cream",135.00,NULL,NULL,1
+64,"Kōhi Float",11,"Coffee beverage with ice cream",130.00,NULL,NULL,1
+65,"Mango Icy Blend",12,"Blended icy mango drink",145.00,NULL,NULL,1
+66,"Blueberry Icy Blend",12,"Blended icy blueberry drink",145.00,NULL,NULL,1
+67,"Strawberry Icy Blend",12,"Blended icy strawberry drink",145.00,NULL,NULL,1
+68,"Matcha Icy Blend",12,"Blended icy matcha drink",145.00,NULL,NULL,1
+69,"Oreo Frappe",13,"Blended coffee with Oreo crumbs",135.00,NULL,NULL,1
+70,"Caramel Frappe",13,"Blended coffee with caramel flavor",130.00,NULL,NULL,1
+71,"Mocha Frappe",13,"Blended coffee with chocolate flavor",130.00,NULL,NULL,1
+72,"Kōhi Crumble Frappe",13,"Blended coffee with cookie crumble",135.00,NULL,NULL,1
+73,"Chocolate Frappuccino",13,"Blended coffee with rich chocolate",130.00,NULL,NULL,1
+74,"Ice Cream Add-on",14,"Add ice cream to your beverage",25.00,NULL,NULL,1
+75,"Strawberry Milk Drink",15,"Milk with strawberry flavor",99.00,NULL,NULL,1
+76,"Blueberry Milk Drink",15,"Milk with blueberry flavor",99.00,NULL,NULL,1
+77,"Mango Milk Drink",15,"Milk with mango flavor",99.00,NULL,NULL,1
+78,"Cherry Milk Drink",15,"Milk with cherry flavor",99.00,NULL,NULL,1
+79,"Ube Milk Drink",15,"Milk with ube flavor",99.00,NULL,NULL,1
+80,"Caramel Milk Drink",15,"Milk with caramel flavor",99.00,NULL,NULL,1
+81,"Chocolate Milk Drink",15,"Milk with chocolate flavor",99.00,NULL,NULL,1
+82,"Matcha Milk Drink",15,"Milk with matcha flavor",120.00,NULL,NULL,1
+83,"Oreo Milk Drink",15,"Milk with Oreo crumbs",120.00,NULL,NULL,1
+84,"Strawberry Matcha Milk Drink",15,"Milk with strawberry and matcha flavor",139.00,NULL,NULL,1
+85,"Hot Chocolate",15,"Hot milk with chocolate",85.00,NULL,NULL,1
+86,"Lemon Fruity Soda",16,"Soda with lemon flavor",90.00,NULL,NULL,1
+87,"Lychee Fruity Soda",16,"Soda with lychee flavor",90.00,NULL,NULL,1
+88,"Green Apple Fruity Soda",16,"Soda with green apple flavor",90.00,NULL,NULL,1
+89,"Strawberry Fruity Soda",16,"Soda with strawberry flavor",90.00,NULL,NULL,1
+90,"Mixed Berries Fruity Soda",16,"Soda with mixed berries flavor",90.00,NULL,NULL,1
+91,"Wintermelon Fruity Soda",16,"Soda with wintermelon flavor",90.00,NULL,NULL,1
+92,"Passionfruit Fruity Soda",16,"Soda with passionfruit flavor",90.00,NULL,NULL,1
